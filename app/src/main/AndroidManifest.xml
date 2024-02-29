@@ -19,13 +19,23 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ReadingUp" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name="com.sgevf.readingup.activity.TaskSettingActivity" />
+        <activity android:name="com.sgevf.readingup.activity.TaskDetailActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ReadingUp" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sgevf.readingup.activity.TaskSettingActivity" />
 
         <service android:name="com.sgevf.readingup.FloatingWindowService" />
     </application>

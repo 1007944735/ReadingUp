@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReadingUp</string>
+    <string name="title_bar_task_details">任务详情页</string>
 </resources>
