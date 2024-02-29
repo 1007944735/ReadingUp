@@ -15,7 +15,8 @@
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/title_bar_task_details" />
+            app:title="@string/title_bar_task_details"
+            app:rightTitle="@string/title_bar_create"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_step_list"

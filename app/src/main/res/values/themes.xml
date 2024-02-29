@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.ReadingUp" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="Theme.ReadingUp" parent="XUITheme.Phone">
+        <item name="colorPrimary">@color/color_theme</item>
+    </style>
 </resources>

@@ -6,11 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hjq.bar.OnTitleBarListener
 import com.hjq.bar.TitleBar
+import com.sgevf.readingup.BaseActivity
 import com.sgevf.readingup.R
 import com.sgevf.readingup.adapter.TaskDetailStepAdapter
 import com.sgevf.readingup.databinding.ActivityTaskDetailBinding
 
-class TaskDetailActivity : AppCompatActivity() {
+class TaskDetailActivity : BaseActivity() {
     private lateinit var mDataBinding: ActivityTaskDetailBinding
     private var mTaskDetailStepAdapter: TaskDetailStepAdapter? = null
 

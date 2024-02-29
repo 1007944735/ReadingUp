@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ReadingUp</string>
+    <!--TaskDetailActivity-->
     <string name="title_bar_task_details">任务详情页</string>
+    <string name="title_bar_create">创建</string>
+    <!--TaskStepCreateActivity-->
+    <string name="title_bar_task_step_create">新增任务</string>
+    <string name="text_complete">完成</string>
+    <string name="text_choose_task">请选择</string>
 </resources>
