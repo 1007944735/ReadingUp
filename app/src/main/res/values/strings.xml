@@ -7,4 +7,10 @@
     <string name="title_bar_task_step_create">新增任务</string>
     <string name="text_complete">完成</string>
     <string name="text_choose_task">请选择</string>
+    <string name="text_action_click">单击</string>
+    <string name="text_action_return_back">返回上一页</string>
+    <string name="text_action_sleep">间隔</string>
+    <string name="text_step_sleep_duration">间隔时长，单位：毫秒</string>
+    <string name="text_step_return_back_no_oper">无需操作，直接点击完成</string>
+    <string name="text_step_click_choose_area">选择点击区域</string>
 </resources>

@@ -4,6 +4,11 @@
 
     <data>
 
+        <import type="com.sgevf.readingup.model.TaskStepModel.StepAction" />
+
+        <variable
+            name="taskStepVM"
+            type="com.sgevf.readingup.viewmodel.TaskStepCreateViewModel" />
     </data>
 
     <LinearLayout
@@ -15,15 +20,25 @@
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/color_theme"
+            app:barStyle="ripple"
             app:title="@string/title_bar_task_step_create" />
 
         <TextView
             android:id="@+id/tv_choose_task"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/text_choose_task"
+            android:background="@color/white"
             android:gravity="center"
-            android:textSize="16sp"/>
+            android:hint="@string/text_choose_task"
+            android:text="@{taskStepVM.actionToString(taskStepVM.action)}"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
@@ -37,15 +52,15 @@
             android:background="@color/white"
             android:padding="20dp">
 
-            <Button
+            <com.xuexiang.xui.widget.button.roundbutton.RoundButton
                 android:id="@+id/btn_complete"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@color/color_theme"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:rb_backgroundColor="@color/color_theme" />
         </FrameLayout>
 
 

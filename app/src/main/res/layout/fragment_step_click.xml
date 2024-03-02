@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="VM"
+            type="com.sgevf.readingup.viewmodel.TaskStepCreateViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/btn_choose_area"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="@string/text_step_click_choose_area"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:rb_backgroundColor="@color/color_theme" />
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:id="@+id/riv_choose_area"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_launcher_background" />
+
+    </LinearLayout>
+</layout>

@@ -1,5 +1,6 @@
 package com.sgevf.readingup.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,11 @@ class TaskDetailActivity : BaseActivity() {
         mDataBinding.titleBar.setOnTitleBarListener(object : OnTitleBarListener {
             override fun onLeftClick(titleBar: TitleBar?) {
                 finish()
+            }
+
+            override fun onRightClick(titleBar: TitleBar?) {
+                val intent = Intent(this@TaskDetailActivity, TaskStepCreateActivity::class.java)
+                startActivity(intent)
             }
         })
 

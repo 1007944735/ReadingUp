@@ -1,8 +1,11 @@
 package com.sgevf.readingup.model
 
-data class TaskStepModel(val action: StepAction) {
+abstract class TaskStepModel(var action: StepAction) {
+
+    abstract fun describe(): String
 
     enum class StepAction {
+        NONE,
         /**
          * 单击
          */
