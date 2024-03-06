@@ -39,6 +39,10 @@
         <activity android:name="com.sgevf.readingup.activity.TaskStepCreateActivity" />
 
         <service android:name="com.sgevf.readingup.FloatingWindowService" />
+        <service android:name="com.sgevf.readingup.screenshot.ScreenShotService"
+            android:foregroundServiceType="mediaProjection">
+
+        </service>
     </application>
 
 </manifest>
