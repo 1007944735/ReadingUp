@@ -28,35 +28,42 @@ class ScreenShotService : Service() {
         ImageReader.newInstance(screenWidth, screenHeight, PixelFormat.RGBA_8888, 1)
     private val handlerThread = HandlerThread("ScreenShotService")
     private val handler = Handler(handlerThread.looper)
+    private var resultCode = -1
+    private var resultData: Intent? = null
+
+    private val binder = ScreenShotBinder()
 
     override fun onCreate() {
         super.onCreate()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        return ScreenShotBinder()
+
+        return binder
     }
 
     inner class ScreenShotBinder : Binder() {
 
-        fun screenCapture(): Bitmap {
-            if (mediaProjection == null) {
-                mediaProjection = mediaProjectManager.getMediaProjection()
-            }
-            virtualDisplay = mediaProjection?.createVirtualDisplay(
-                "virtualDisplay",
-                screenWidth,
-                screenHeight,
-                screenDensity,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-                imageReader.surface,
-                null, handler
-            )
+        fun getService() = this@ScreenShotService
 
-            val bitmap = formatImageToBitmap(imageReader.acquireLatestImage())
-            return bitmap
+    }
+
+    fun screenCapture(): Bitmap? {
+        if (resultCode != -1 || resultData == null) return null
+        if (mediaProjection == null) {
+            mediaProjection = mediaProjectManager.getMediaProjection(resultCode, resultData!!)
         }
-
+        virtualDisplay = mediaProjection?.createVirtualDisplay(
+            "virtualDisplay",
+            screenWidth,
+            screenHeight,
+            screenDensity,
+            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+            imageReader.surface,
+            null, handler
+        )
+        //TODO:wait a few time
+        return formatImageToBitmap(imageReader.acquireLatestImage())
     }
     private fun formatImageToBitmap(image: Image) : Bitmap{
         val bWidth = image.width
