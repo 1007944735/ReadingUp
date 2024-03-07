@@ -1,5 +1,6 @@
 package com.sgevf.readingup.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.app.Service
 import android.content.ComponentName
@@ -7,26 +8,28 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.media.projection.MediaProjectionManager
-import android.os.Binder
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.sgevf.readingup.FloatingWindowService
+import com.sgevf.readingup.PermissionUtil
 import com.sgevf.readingup.R
+import com.sgevf.readingup.Utils
 import com.sgevf.readingup.databinding.FragmentStepClickBinding
 import com.sgevf.readingup.screenshot.ScreenShotService
 import com.sgevf.readingup.viewmodel.TaskStepCreateViewModel
-import java.util.Objects
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ClickStepFragment: Fragment() {
 
@@ -37,22 +40,6 @@ class ClickStepFragment: Fragment() {
     private var resultData: Intent ? = null
 
     private var launcher: ActivityResultLauncher<Intent>? = null
-
-    private var screenShotService: ScreenShotService? = null
-
-    private val con = object : ServiceConnection {
-        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-            p1?.let {
-                screenShotService = (it as ScreenShotService.ScreenShotBinder).getService()
-                startScreenShot()
-            }
-        }
-
-        override fun onServiceDisconnected(p0: ComponentName?) {
-            screenShotService = null
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,15 +61,28 @@ class ClickStepFragment: Fragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 resultCode = it.resultCode
                 resultData = it.data
-                startScreenShot()
+                startFloatingWindowService()
+
             }
         }
         mDataBinding.btnChooseArea.setOnClickListener {
-            if (resultCode == -1 && resultData == null) {
-                requestRecordScreenPermission()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                lifecycleScope.launch(Dispatchers.Main) {
+                    if (PermissionUtil.permit(requireContext(), Manifest.permission.POST_NOTIFICATIONS)) {
+                        screenShot()
+                    }
+                }
             } else {
-                startScreenShot()
+                screenShot()
             }
+        }
+    }
+
+    private fun screenShot() {
+        if (resultCode == -1 && resultData == null) {
+            requestRecordScreenPermission()
+        } else {
+            startFloatingWindowService()
         }
     }
 
@@ -91,18 +91,13 @@ class ClickStepFragment: Fragment() {
         launcher?.launch(mediaProjectionManager.createScreenCaptureIntent())
     }
 
-    private fun startScreenShot() {
-        if (screenShotService == null) {
-            val intent = Intent(requireContext(), ScreenShotService::class.java)
-            requireActivity().bindService(intent, con, Service.BIND_AUTO_CREATE)
-        } else {
-            screenShotService!!.screenCapture()?.let {
-                mDataBinding.rivChooseArea.setImageBitmap(it)
-            }
+    private fun startFloatingWindowService() {
+        if (Utils.commonROMPermissionCheck(requireContext())) {
+            val intent = Intent(requireContext(), FloatingWindowService::class.java)
+            intent.putExtra("resultCode", resultCode)
+            intent.putExtra("resultData", resultData)
+            requireContext().startService(intent)
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        Utils.backToPhoneHome(requireContext())
     }
 }

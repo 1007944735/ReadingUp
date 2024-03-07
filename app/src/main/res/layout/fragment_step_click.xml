@@ -26,12 +26,13 @@
             android:textSize="16sp"
             app:rb_backgroundColor="@color/color_theme" />
 
-        <com.xuexiang.xui.widget.imageview.RadiusImageView
+        <ImageView
             android:id="@+id/riv_choose_area"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:background="#80FFFFFF"
+            android:scaleType="fitCenter" />
 
     </LinearLayout>
 </layout>
